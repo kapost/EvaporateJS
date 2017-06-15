@@ -455,12 +455,11 @@
     this.evaporate = evaporate;
     this.localTimeOffset = evaporate.localTimeOffset;
     this.deferredCompletion = defer();
+    this.signParams = con.signParams;
 
     extend(this, file);
 
     this.id = decodeURIComponent(this.con.bucket + '/' + this.name);
-
-    this.signParams = con.signParams;
   }
   FileUpload.prototype.con = undefined;
   FileUpload.prototype.evaporate = undefined;
@@ -752,7 +751,7 @@
           fileType: this.file.type,
           lastModifiedDate: dateISOString(this.file.lastModified),
           partSize: this.con.partSize,
-          signParams: this.con.signParams,
+          signParams: this.signParams || this.con.signParams,
           createdAt: new Date().toISOString()
         };
     saveUpload(fileKey, newUpload);
